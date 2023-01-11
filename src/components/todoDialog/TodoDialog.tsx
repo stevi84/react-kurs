@@ -7,10 +7,10 @@ import { getEmptyTodo, Todo } from '../../models/Todo';
 import { isReadingSelector, isSubmittingSelector } from '../../reducers/ApiCallsReducer';
 import { useAppDispatch, useAppSelector } from '../../reducers/Store';
 import {
-  createTodoThunk,
-  readTodosThunk,
+  createTodo,
+  readTodos,
   todosSelector,
-  updateTodoThunk,
+  updateTodo,
 } from '../../reducers/TodosReducer';
 import { DataTable } from '../dataTable/DataTable';
 import { DataTypes } from '../dataTable/DataTableInterfaces';
@@ -25,7 +25,7 @@ export const TodoDialog = () => {
   const dispatch = useAppDispatch();
   useNotifier();
   useEffect(() => {
-    dispatch(readTodosThunk());
+    dispatch(readTodos());
   }, [dispatch]);
 
   return (
@@ -38,9 +38,9 @@ export const TodoDialog = () => {
       ]}
       rowsData={todos}
       manager={{
-        create: (entity: Todo) => dispatch(createTodoThunk(entity)),
-        read: () => dispatch(readTodosThunk()),
-        update: (entity: Partial<Todo>) => dispatch(updateTodoThunk(entity)),
+        create: (entity: Todo) => dispatch(createTodo(entity)),
+        read: () => dispatch(readTodos()),
+        update: (entity: Partial<Todo>) => dispatch(updateTodo(entity)),
         delete: (entity: Todo) => {},
         getEmpty: getEmptyTodo,
       }}

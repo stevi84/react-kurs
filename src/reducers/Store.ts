@@ -3,12 +3,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { todosReducer } from './TodosReducer';
 import { apiCallsReducer } from './ApiCallsReducer';
 import { snackbarsReducer } from './SnackbarsReducer';
+import { dataTableReducer } from './DataTableReducer';
 
 export const store = configureStore({
   reducer: {
     snackbar: snackbarsReducer,
     todos: todosReducer,
     apiCalls: apiCallsReducer,
+    dataTable: dataTableReducer,
   },
 });
 

@@ -5,6 +5,7 @@ import { Locale } from '../../globals/Translations';
 import useNotifier from '../../hooks/UseNotifier';
 import { getEmptyTodo, Todo } from '../../models/Todo';
 import { isReadingSelector, isSubmittingSelector } from '../../reducers/ApiCallsReducer';
+import { dataTableVisibleSelector } from '../../reducers/DataTableReducer';
 import { useAppDispatch, useAppSelector } from '../../reducers/Store';
 import {
   createTodo,
@@ -20,6 +21,7 @@ export const TodoDialog = () => {
   const todos: Todo[] = useAppSelector(todosSelector);
   const isReading: boolean = useAppSelector(isReadingSelector);
   const isSubmitting: boolean = useAppSelector(isSubmittingSelector);
+  const dataTableVisible: boolean = useAppSelector(dataTableVisibleSelector);
 
   const { i18n } = useTranslation();
   const lang: Locale = i18n.language as Locale;
@@ -32,25 +34,27 @@ export const TodoDialog = () => {
   return (
     <div>
       <Header />
-      <DataTable<Todo>
-        id={'todo-table'}
-        columns={[
-          { property: 'owner', datatype: DataTypes.STRING, validateFn: formIsNotEmptyString },
-          { property: 'dueDate', datatype: DataTypes.DATE, validateFn: formIsIsoDate },
-          { property: 'description', datatype: DataTypes.STRING, validateFn: formIsNotEmptyString },
-        ]}
-        rowsData={todos}
-        manager={{
-          create: (entity: Todo) => dispatch(createTodo(entity)),
-          read: () => dispatch(readTodos()),
-          update: (entity: Partial<Todo>) => dispatch(updateTodo(entity)),
-          delete: (entity: Todo) => {},
-          getEmpty: getEmptyTodo,
-        }}
-        lang={lang}
-        isReading={isReading}
-        isSubmitting={isSubmitting}
-      />
+      {dataTableVisible ?
+        <DataTable<Todo>
+          id={'todo-table'}
+          columns={[
+            { property: 'owner', datatype: DataTypes.STRING, validateFn: formIsNotEmptyString },
+            { property: 'dueDate', datatype: DataTypes.DATE, validateFn: formIsIsoDate },
+            { property: 'description', datatype: DataTypes.STRING, validateFn: formIsNotEmptyString },
+          ]}
+          rowsData={todos}
+          manager={{
+            create: (entity: Todo) => dispatch(createTodo(entity)),
+            read: () => dispatch(readTodos()),
+            update: (entity: Partial<Todo>) => dispatch(updateTodo(entity)),
+            delete: (entity: Todo) => {},
+            getEmpty: getEmptyTodo,
+          }}
+          lang={lang}
+          isReading={isReading}
+          isSubmitting={isSubmitting}
+        />
+        : <div></div>}
     </div>
   );
 };

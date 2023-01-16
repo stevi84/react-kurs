@@ -21,11 +21,14 @@ const todosSlice = createSlice({
     changeTodo(state, action: PayloadAction<Todo>) {
       return state.map((todo) => (todo.id !== action.payload.id ? todo : action.payload));
     },
+    removeTodo(state, action: PayloadAction<number>) {
+      return state.filter((todo) => todo.id !== action.payload);
+    },
   },
 });
 
 const { actions, reducer } = todosSlice;
-export const { setTodos, addTodo, changeTodo } = actions;
+export const { setTodos, addTodo, changeTodo, removeTodo } = actions;
 export { reducer as todosReducer };
 
 export const todosSelector = (state: RootState): Todo[] => state.todos;
@@ -76,6 +79,25 @@ export const updateTodo =
         return response.data;
       } catch (error) {
         dispatch(enqueueSnackbar(createMessage('update', 'todo', false), { variant: 'error', autoHideDuration: null }));
+        throw error;
+      } finally {
+        dispatch(decreaseSubmits());
+      }
+    };
+
+export const deleteTodo =
+  (todoId: number): AppThunk<Promise<void>> =>
+    async (dispatch) => {
+      dispatch(increaseSubmits());
+      try {
+        const response = await todoApi.deleteTodo(todoId);
+        dispatch(removeTodo(todoId));
+        dispatch(
+          enqueueSnackbar(createMessage('delete', 'todo', true), { variant: 'success', autoHideDuration: 2000 }),
+        );
+        return response.data;
+      } catch (error) {
+        dispatch(enqueueSnackbar(createMessage('delete', 'todo', false), { variant: 'error', autoHideDuration: null }));
         throw error;
       } finally {
         dispatch(decreaseSubmits());

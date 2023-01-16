@@ -6,6 +6,7 @@ import { DateRead } from './DateRead';
 import { NumberRead } from './NumberRead';
 import { StringRead } from './StringRead';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { BooleanRead } from './BooleanRead';
 
 interface DataTableRowReadOwnProps<EntityType> extends DataTableRowOwnProps<EntityType> {
@@ -53,6 +54,7 @@ export const DataTableRowRead = <EntityType extends BaseEntity>(props: DataTable
   };
 
   const doSetEdited = () => setEdited(rowData);
+  const doDelete = () => manager.delete(rowData);
 
   const getActionComponents = (): React.ReactNode => {
     return (
@@ -66,6 +68,18 @@ export const DataTableRowRead = <EntityType extends BaseEntity>(props: DataTable
               disabled={!actionsActive}
             >
               <EditIcon />
+            </IconButton>
+          </span>
+        </Tooltip>
+        <Tooltip title={!actionsActive ? t('tooltip_action_inactive') : t('delete')}>
+          <span>
+            <IconButton
+              id={`${id}-row-${rowIndex}-button-delete`}
+              color="primary"
+              onClick={doDelete}
+              disabled={!actionsActive}
+            >
+              <DeleteIcon />
             </IconButton>
           </span>
         </Tooltip>

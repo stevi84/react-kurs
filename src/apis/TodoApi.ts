@@ -17,3 +17,5 @@ export const updateTodo = (todo: Partial<Todo>): AxiosPromise<Todo> => {
   const data: Partial<Todo> = { ...todo, id: undefined, tsCreate: undefined, tsUpdate: undefined };
   return axios.patch<Todo>(`${url}/todos/${todo.id}`, data, { headers });
 };
+
+export const deleteTodo = (todoId: number): AxiosPromise<void> => axios.delete<void>(`${url}/todos/${todoId}`);

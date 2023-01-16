@@ -1,0 +1,21 @@
+.header-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  background-image: linear-gradient(to right, rgb(74, 85, 215), rgb(197, 203, 255));
+}
+
+.header-item {
+  margin: 7px;
+}
+
+.header-icon {
+  font-size: xx-large;
+}
+
+.header-text {
+  flex-grow: 1;
+  font-size: larger;
+}

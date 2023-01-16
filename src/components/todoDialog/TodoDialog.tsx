@@ -12,6 +12,7 @@ import {
   todosSelector,
   updateTodo,
 } from '../../reducers/TodosReducer';
+import { Header } from '../common/Header';
 import { DataTable } from '../dataTable/DataTable';
 import { DataTypes } from '../dataTable/DataTableInterfaces';
 
@@ -29,24 +30,27 @@ export const TodoDialog = () => {
   }, [dispatch]);
 
   return (
-    <DataTable<Todo>
-      id={'todo-table'}
-      columns={[
-        { property: 'owner', datatype: DataTypes.STRING, validateFn: formIsNotEmptyString },
-        { property: 'dueDate', datatype: DataTypes.DATE, validateFn: formIsIsoDate },
-        { property: 'description', datatype: DataTypes.STRING, validateFn: formIsNotEmptyString },
-      ]}
-      rowsData={todos}
-      manager={{
-        create: (entity: Todo) => dispatch(createTodo(entity)),
-        read: () => dispatch(readTodos()),
-        update: (entity: Partial<Todo>) => dispatch(updateTodo(entity)),
-        delete: (entity: Todo) => {},
-        getEmpty: getEmptyTodo,
-      }}
-      lang={lang}
-      isReading={isReading}
-      isSubmitting={isSubmitting}
-    />
+    <div>
+      <Header />
+      <DataTable<Todo>
+        id={'todo-table'}
+        columns={[
+          { property: 'owner', datatype: DataTypes.STRING, validateFn: formIsNotEmptyString },
+          { property: 'dueDate', datatype: DataTypes.DATE, validateFn: formIsIsoDate },
+          { property: 'description', datatype: DataTypes.STRING, validateFn: formIsNotEmptyString },
+        ]}
+        rowsData={todos}
+        manager={{
+          create: (entity: Todo) => dispatch(createTodo(entity)),
+          read: () => dispatch(readTodos()),
+          update: (entity: Partial<Todo>) => dispatch(updateTodo(entity)),
+          delete: (entity: Todo) => {},
+          getEmpty: getEmptyTodo,
+        }}
+        lang={lang}
+        isReading={isReading}
+        isSubmitting={isSubmitting}
+      />
+    </div>
   );
 };

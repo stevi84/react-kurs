@@ -9,6 +9,7 @@ import { StringEdit, StringEditProps } from './StringEdit';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton, TableCell, TableRow, Tooltip } from '@mui/material';
+import { BooleanEdit, BooleanEditProps } from './BooleanEdit';
 
 interface DataTableRowEditOwnProps<EntityType> extends DataTableRowOwnProps<EntityType> {
   cancel: () => void;
@@ -26,6 +27,8 @@ export const DataTableRowEdit = <EntityType extends BaseEntity>(props: DataTable
         return getStringEditComponent(id, column);
       case DataTypes.DATE:
         return getDateEditComponent(id, column);
+      case DataTypes.BOOLEAN:
+        return getBooleanEditComponent(id, column);
       default:
         return getStringEditComponent(id, column);
     }
@@ -64,6 +67,18 @@ export const DataTableRowEdit = <EntityType extends BaseEntity>(props: DataTable
         validate={column.validateFn}
         id={id}
         lang={lang}
+      />
+    );
+  };
+
+  const getBooleanEditComponent = (id: string, column: Column<EntityType>): React.ReactNode => {
+    return (
+      <Field<boolean, HTMLElement, boolean, BooleanEditProps>
+        name={column.property as string}
+        component={BooleanEdit}
+        type={'checkbox'}
+        validate={column.validateFn}
+        id={id}
       />
     );
   };

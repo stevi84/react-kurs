@@ -41,6 +41,7 @@ export const TodoDialog = () => {
             { property: 'owner', datatype: DataTypes.STRING, validateFn: formIsNotEmptyString },
             { property: 'dueDate', datatype: DataTypes.DATE, validateFn: formIsIsoDate },
             { property: 'description', datatype: DataTypes.STRING, validateFn: formIsNotEmptyString },
+            { property: 'completed', datatype: DataTypes.BOOLEAN },
           ]}
           rowsData={todos}
           manager={{

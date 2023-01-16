@@ -6,6 +6,7 @@ import { DateRead } from './DateRead';
 import { NumberRead } from './NumberRead';
 import { StringRead } from './StringRead';
 import EditIcon from '@mui/icons-material/Edit';
+import { BooleanRead } from './BooleanRead';
 
 interface DataTableRowReadOwnProps<EntityType> extends DataTableRowOwnProps<EntityType> {
   setEdited: (entity: EntityType) => void;
@@ -24,6 +25,8 @@ export const DataTableRowRead = <EntityType extends BaseEntity>(props: DataTable
         return getStringReadComponent(id, column);
       case DataTypes.DATE:
         return getDateReadComponent(id, column);
+      case DataTypes.BOOLEAN:
+        return getBooleanReadComponent(id, column);
       default:
         return getStringReadComponent(id, column);
     }
@@ -42,6 +45,11 @@ export const DataTableRowRead = <EntityType extends BaseEntity>(props: DataTable
   const getDateReadComponent = (id: string, column: Column<EntityType>): React.ReactNode => {
     const value: string = rowData[column.property] as unknown as string;
     return <DateRead id={id} value={value} lang={lang} />;
+  };
+
+  const getBooleanReadComponent = (id: string, column: Column<EntityType>): React.ReactNode => {
+    const value: boolean = rowData[column.property] as unknown as boolean;
+    return <BooleanRead id={id} value={value} />;
   };
 
   const doSetEdited = () => setEdited(rowData);

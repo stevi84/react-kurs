@@ -1,7 +1,6 @@
 import { createTheme, ThemeProvider } from '@mui/material';
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
-import { LanguageSwitch } from './LanguageSwitch';
 
 const theme = createTheme();
 

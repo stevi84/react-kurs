@@ -13,19 +13,19 @@ export const Header = () => {
 
   return (
     <div className='header-container'>
-      {showLogo && <div className='header-item header-icon'>
+      {showLogo && <div data-testid='header-logo' className='header-item header-icon'>
         🌐
       </div>}
       <div className='header-item header-text'>
         React-App
       </div>
       <div className='header-item'>
-        <input type='checkbox' checked={showLogo} onChange={onLogoChange}></input>
-        <span>Logo</span>
+        <input id='header-logo-checkbox' type='checkbox' checked={showLogo} onChange={onLogoChange}></input>
+        <label htmlFor='header-logo-checkbox'>Logo</label>
       </div>
       <div className='header-item'>
-        <input type='checkbox' checked={dataTableVisible} onChange={onTableChange}></input>
-        <span>Tabelle</span>
+        <input id='header-table-checkbox' type='checkbox' checked={dataTableVisible} onChange={onTableChange}></input>
+        <label htmlFor='header-table-checkbox'>Tabelle</label>
       </div>
       <div className='header-item'>
         <LanguageSwitch />

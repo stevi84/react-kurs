@@ -165,7 +165,7 @@ export const DataTable = <EntityType extends BaseEntity>(props: DataTableOwnProp
       </TableContainer>
       {(isReading || isSubmitting) && (
         <div>
-          <CircularProgress />
+          <CircularProgress id='loading-spinner' />
           {`${t(isReading ? 'reading' : 'submitting')}...`}
         </div>
       )}
